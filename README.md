@@ -8,3 +8,4 @@ Este projeto tem como intuito apresentar uma solução para o problema proposto 
 * Spring Web
 * MySQL Driver
 * Validation
+* Flyway Migration
