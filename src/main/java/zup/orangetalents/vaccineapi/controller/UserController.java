@@ -6,11 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zup.orangetalents.vaccineapi.model.User;
 import zup.orangetalents.vaccineapi.repository.UserRepository;
+import zup.orangetalents.vaccineapi.service.UserService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public List<User> listUsers(){
@@ -42,7 +43,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User adiciona(@Valid @RequestBody User user){
-        return userRepository.save(user);
+        return userService.salvar(user);
     }
 
     @PutMapping("/{userId}")
@@ -52,7 +53,7 @@ public class UserController {
         }
 
         user.setId(userId);
-        user = userRepository.save(user);
+        user = userService.salvar(user);
 
         return ResponseEntity.ok(user);
     }
@@ -62,7 +63,7 @@ public class UserController {
         if (!userRepository.existsById(userId)){
             return ResponseEntity.notFound().build();
         }
-        userRepository.deleteById(userId);
+        userService.excluir(userId);
         return ResponseEntity.noContent().build();
     }
 }

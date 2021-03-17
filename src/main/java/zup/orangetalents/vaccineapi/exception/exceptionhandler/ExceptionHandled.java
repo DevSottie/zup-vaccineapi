@@ -1,8 +1,11 @@
-package zup.orangetalents.vaccineapi.exceptionhandler;
+package zup.orangetalents.vaccineapi.exception.exceptionhandler;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExceptionHandled {
     private Integer status;
     private LocalDateTime dataHora;
