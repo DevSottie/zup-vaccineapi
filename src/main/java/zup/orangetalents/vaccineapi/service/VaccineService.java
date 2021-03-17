@@ -9,6 +9,7 @@ import zup.orangetalents.vaccineapi.repository.UserRepository;
 import zup.orangetalents.vaccineapi.repository.VaccineRepository;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Service
 public class VaccineService {
@@ -24,7 +25,7 @@ public class VaccineService {
                 .orElseThrow(() -> new UserException("Usuário não encontrado"));
 
         vaccine.setUser(user);
-        vaccine.setDataAplicacao(LocalDateTime.now().toString());
+        vaccine.setDataAplicacao(OffsetDateTime.now().toString());
         return vaccineRepository.save(vaccine);
     }
 }
