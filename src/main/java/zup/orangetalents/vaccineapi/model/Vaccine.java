@@ -1,10 +1,14 @@
 package zup.orangetalents.vaccineapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import zup.orangetalents.vaccineapi.ValidationGroups;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +22,8 @@ public class Vaccine {
     @Column(name = "vaccine_name")
     private String nome;
 
+    @Valid
+    @ConvertGroup(from = Default.class, to = ValidationGroups.UserId.class)
     @ManyToOne
     @NotNull
     @JoinColumn(name = "id_user")
