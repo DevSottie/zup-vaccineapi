@@ -39,6 +39,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User adicionaUsuario(@RequestBody User user){
         return userRepository.save(user);
     }
