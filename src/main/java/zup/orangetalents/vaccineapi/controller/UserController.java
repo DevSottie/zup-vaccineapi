@@ -3,10 +3,7 @@ package zup.orangetalents.vaccineapi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zup.orangetalents.vaccineapi.model.User;
 import zup.orangetalents.vaccineapi.repository.UserRepository;
 
@@ -39,5 +36,10 @@ public class UserController {
 //            return new ResponseEntity<User>(user.get(), HttpStatus.CREATED);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public User adicionaUsuario(@RequestBody User user){
+        return userRepository.save(user);
     }
 }

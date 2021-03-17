@@ -20,7 +20,6 @@ public class User {
     @Column(name = "user_cpf")
     private String cpf;
 
-
     @Column(name = "user_birthdate")
     private Date birthDate;
 
