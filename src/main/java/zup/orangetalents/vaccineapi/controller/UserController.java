@@ -1,9 +1,13 @@
 package zup.orangetalents.vaccineapi.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import zup.orangetalents.vaccineapi.dto.UserDTO;
+import zup.orangetalents.vaccineapi.dto.UserModel;
+import zup.orangetalents.vaccineapi.dto.VaccineDTO;
 import zup.orangetalents.vaccineapi.model.User;
 import zup.orangetalents.vaccineapi.repository.UserRepository;
 import zup.orangetalents.vaccineapi.service.UserService;
@@ -11,6 +15,7 @@ import zup.orangetalents.vaccineapi.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -22,9 +27,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping
-    public List<User> listUsers(){
-        return userRepository.findAll();
+    public List<UserModel> listUsers(){
+        return toCollectionModel(userRepository.findAll());
 //        return userRepository.findByNome("Beatriz Daniela Laís Martins");
 //        return userRepository.findByNomeContaining("Beatriz");
     }
@@ -42,8 +50,9 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User adiciona(@Valid @RequestBody User user){
-        return userService.salvar(user);
+    public UserModel adiciona(@Valid @RequestBody UserDTO userDTO){
+        User user = toEntity(userDTO);
+        return toModel(userService.salvar(user));
     }
 
     @PutMapping("/{userId}")
@@ -65,5 +74,19 @@ public class UserController {
         }
         userService.excluir(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    private UserModel toModel(User user){
+        return modelMapper.map(user, UserModel.class);
+    }
+
+    private List<UserModel> toCollectionModel(List<User> users){
+        return users.stream()
+                .map(user -> toModel(user))
+                .collect(Collectors.toList());
+    }
+
+    private User toEntity(UserDTO userDTO){
+        return modelMapper.map(userDTO, User.class);
     }
 }
