@@ -3,6 +3,8 @@ package zup.orangetalents.vaccineapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,10 +14,12 @@ public class Vaccine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(name = "vaccine_name")
     private String nome;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "id_user")
     private User user;
 

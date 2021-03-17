@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import zup.orangetalents.vaccineapi.model.Vaccine;
 import zup.orangetalents.vaccineapi.service.VaccineService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/vaccine")
 public class VaccineController {
@@ -15,7 +17,7 @@ public class VaccineController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vaccine criar(@RequestBody Vaccine vaccine){
+    public Vaccine criar(@Valid @RequestBody Vaccine vaccine){
         return vaccineService.adicionaVacina(vaccine);
     }
 }
