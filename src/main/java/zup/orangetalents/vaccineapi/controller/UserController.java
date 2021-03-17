@@ -9,6 +9,7 @@ import zup.orangetalents.vaccineapi.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -40,12 +41,12 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User adicionaUsuario(@RequestBody User user){
+    public User adiciona(@Valid @RequestBody User user){
         return userRepository.save(user);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> atualizar(@PathVariable Long userId, @RequestBody User user){
+    public ResponseEntity<User> atualizar(@Valid @PathVariable Long userId, @RequestBody User user){
         if(!userRepository.existsById(userId)){
             return ResponseEntity.notFound().build();
         }
@@ -62,7 +63,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         userRepository.deleteById(userId);
-
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,11 @@
 package zup.orangetalents.vaccineapi.model;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,17 +16,26 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @NotBlank
+    @Size(max = 60)
     @Column(name = "user_nome")
     private String nome;
 
+    @NotBlank
+    @Email
+    @Size(max = 255)
     @Column(name = "user_email")
     private String email;
 
+    @NotBlank
+    @CPF
+    @Size(max = 14)
     @Column(name = "user_cpf")
     private String cpf;
 
+    @NotBlank
     @Column(name = "user_birthdate")
-    private Date birthDate;
+    private String birthDate;
 
     public Long getId() {
         return id;
@@ -55,11 +69,11 @@ public class User {
         this.cpf = cpf;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
     @Override
